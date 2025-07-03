@@ -1,4 +1,5 @@
 import { VendorFormData } from "@/app/utils/types";
+import styles from "./inputs.module.scss";
 
 type TextBoxProps = {
   name: keyof VendorFormData;
@@ -6,6 +7,7 @@ type TextBoxProps = {
   value: VendorFormData;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   required?: boolean;
+  error?: string;
 };
 
 const TextBox = ({
@@ -14,10 +16,13 @@ const TextBox = ({
   required = false,
   value,
   onChange,
+  error,
 }: TextBoxProps) => {
   return (
-    <>
-      <label htmlFor={name}>{label}</label>
+    <div className={styles.textBox}>
+      <label htmlFor={name} style={{ marginBottom: "0.25rem" }}>
+        {label}
+      </label>
       <input
         type="text"
         name={name}
@@ -27,7 +32,8 @@ const TextBox = ({
         value={value[`${name}`]}
         onChange={onChange}
       />
-    </>
+      {error && <p className={styles.error}>{error}</p>}
+    </div>
   );
 };
 

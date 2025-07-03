@@ -25,14 +25,23 @@ const VendorForm = ({ url, method }: VendorFormProps) => {
     zipCode: "",
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string[] | undefined>>(
+    {}
+  );
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    if (errors[name]) {
+      const newErrors = { ...errors };
+      delete newErrors[name];
+      setErrors(newErrors);
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setErrors({});
     setIsLoading(true);
 
     try {
@@ -53,10 +62,12 @@ const VendorForm = ({ url, method }: VendorFormProps) => {
       }
     } catch (error) {
       if (error instanceof ZodError) {
-        alert("Name can only be between 3-20 characters");
+        setErrors(error.flatten().fieldErrors);
+        setIsLoading(false);
+      } else {
+        alert("Something went wrong");
+        setIsLoading(false);
       }
-
-      alert("Something went wrong");
     }
   };
   return (
@@ -67,8 +78,9 @@ const VendorForm = ({ url, method }: VendorFormProps) => {
           value={formData}
           onChange={handleChange}
           required
-          name={field.name}
+          name={field.name as keyof VendorFormData}
           label={field.label}
+          error={errors[field.name]?.[0]}
         />
       ))}
       {isLoading ? (
