@@ -5,7 +5,17 @@ import styles from "./navbar.module.scss";
 
 const Navbar = async () => {
   const session = await auth();
-  console.log(session);
+
+  const signOutHandler = async () => {
+    "use server";
+    await signOut({ redirectTo: "/" });
+  };
+
+  const signInHandler = async () => {
+    "use server";
+    await signIn("google");
+  };
+
   return (
     <header className={styles.header}>
       <nav className={styles.navbar}>
@@ -15,24 +25,12 @@ const Navbar = async () => {
             <>
               <Link href="/vendors/create">Create Vendor</Link>
               <Link href={`/user/${session.user?.id}`}>My Vendors</Link>
-              <form
-                action={async () => {
-                  "use server";
-
-                  await signOut({ redirectTo: "/" });
-                }}
-              >
+              <form action={signOutHandler}>
                 <button type="submit">Logout</button>
               </form>
             </>
           ) : (
-            <form
-              action={async () => {
-                "use server";
-
-                await signIn("google");
-              }}
-            >
+            <form action={signInHandler}>
               <button type="submit">Login</button>
             </form>
           )}
