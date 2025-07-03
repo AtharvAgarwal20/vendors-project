@@ -13,7 +13,7 @@ const Navbar = async () => {
         <div>
           {session && session?.user ? (
             <>
-              <Link href="/vendor/create">Create Vendor</Link>
+              <Link href="/vendors/create">Create Vendor</Link>
               <Link href={`/user/${session.user?.id}`}>My Vendors</Link>
               <form
                 action={async () => {
