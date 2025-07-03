@@ -38,6 +38,8 @@ export async function POST(req: Request) {
       zipCode,
     });
 
+    console.log(parsedBody);
+
     const newVendor = await prisma.vendor.create({
       data: parsedBody,
     });

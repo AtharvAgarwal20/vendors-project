@@ -8,3 +8,8 @@ export type VendorFormData = {
   country?: string;
   zipCode?: string;
 };
+
+export type FormFields = {
+  name: keyof VendorFormData;
+  label: string;
+};
