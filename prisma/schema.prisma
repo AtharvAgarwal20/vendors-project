@@ -15,6 +15,7 @@ datasource db {
 
 model Vendor {
   id           Int      @id @default(autoincrement())
+  email        String
   name         String   @unique
   bankAccNo    String
   bankName     String
