@@ -28,6 +28,7 @@ export async function POST(req: Request) {
     } = body;
 
     const parsedBody = vendorSchema.parse({
+      email: session.user?.email,
       name,
       bankAccNo,
       bankName,
@@ -38,28 +39,28 @@ export async function POST(req: Request) {
       zipCode,
     });
 
-    console.log(parsedBody);
-
     const newVendor = await prisma.vendor.create({
       data: parsedBody,
     });
 
     return NextResponse.json(newVendor, { status: 201 });
-  } catch (error) {
-    if (error instanceof ZodError) {
-      console.log(error);
+  } catch (err) {
+    if (err instanceof ZodError) {
+      console.log(err);
       return NextResponse.json({ error: "Invalid Form Data" }, { status: 400 });
     }
 
     if (
-      error instanceof Prisma.PrismaClientKnownRequestError &&
-      error.code === "P2002"
+      err instanceof Prisma.PrismaClientKnownRequestError &&
+      err.code === "P2002"
     ) {
       return NextResponse.json(
         { error: "Vendor name already in use" },
         { status: 409 }
       );
     }
+
+    console.log(err);
 
     return NextResponse.json(
       { error: "An unexpected error occured" },

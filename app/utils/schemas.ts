@@ -1,6 +1,6 @@
 import { z } from "zod/v4";
 
-export const vendorSchema = z.object({
+const vendorSchemaObject = {
   name: z
     .string()
     .min(2, "Name cannot be shorter than 2 letters")
@@ -21,4 +21,11 @@ export const vendorSchema = z.object({
     )
     .optional(),
   zipCode: z.string().optional(),
+};
+
+export const vendorSchema = z.object({
+  email: z.string().nonempty("Email could not be validated"),
+  ...vendorSchemaObject,
 });
+
+export const frontendVendorSchema = z.object(vendorSchemaObject);

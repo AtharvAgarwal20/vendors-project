@@ -1,7 +1,7 @@
 "use client";
 
 import { formFields } from "@/app/utils/data";
-import { vendorSchema } from "@/app/utils/schemas";
+import { frontendVendorSchema } from "@/app/utils/schemas";
 import { VendorFormData } from "@/app/utils/types";
 import axios from "axios";
 import React, { useState } from "react";
@@ -45,7 +45,7 @@ const VendorForm = ({ url, method }: VendorFormProps) => {
     setIsLoading(true);
 
     try {
-      const parsedData = vendorSchema.parse(formData);
+      const parsedData = frontendVendorSchema.parse(formData);
 
       if (method === "post") {
         axios
@@ -72,15 +72,14 @@ const VendorForm = ({ url, method }: VendorFormProps) => {
   };
   return (
     <form onSubmit={handleSubmit}>
-      {formFields.map((field) => (
+      {formFields.map(({ name, label }) => (
         <TextBox
-          key={field.name}
+          key={name}
           value={formData}
           onChange={handleChange}
-          required
-          name={field.name as keyof VendorFormData}
-          label={field.label}
-          error={errors[field.name]?.[0]}
+          name={name as keyof VendorFormData}
+          label={label}
+          error={errors[name]?.[0]}
         />
       ))}
       {isLoading ? (
