@@ -18,8 +18,8 @@ model Vendor {
   name         String
   bankAccNo    String
   bankName     String
-  addressLine1 String?
-  addressLine2 String
+  addressLine1 String
+  addressLine2 String?
   city         String?
   country      String?
   zipCode      String?
