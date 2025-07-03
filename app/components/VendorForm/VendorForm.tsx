@@ -39,10 +39,10 @@ const VendorForm = ({ url, method }: VendorFormProps) => {
       axios
         .post(url, formData)
         .then((res) => {
-          console.log(res);
+          alert("Vendor Created");
         })
         .catch((err) => {
-          console.log(err);
+          alert(err?.response?.data?.error || "Something went wrong");
         });
     }
   };
