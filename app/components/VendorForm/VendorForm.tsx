@@ -6,6 +6,7 @@ import { VendorFormData } from "@/app/utils/types";
 import axios from "axios";
 import React, { useState } from "react";
 import { ZodError } from "zod/v4";
+import SubmitBtn from "../Inputs/SubmitBtn";
 import TextBox from "../Inputs/TextBox";
 import styles from "./form.module.scss";
 
@@ -118,11 +119,7 @@ const VendorForm = ({
             />
           ))}
         </div>
-        {isLoading ? (
-          <span>Loading...</span>
-        ) : (
-          <button type="submit">Submit</button>
-        )}
+        {isLoading ? <span>Loading...</span> : <SubmitBtn />}
       </form>
     </main>
   );

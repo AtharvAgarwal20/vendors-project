@@ -16,3 +16,17 @@
     font-size: 0.8rem;
   }
 }
+
+.submitBtn {
+  cursor: pointer;
+  display: flex;
+  width: 84px;
+  height: 40px;
+  min-width: 84px;
+  max-width: 480px;
+  padding: 0px 16px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+  background: #dbe8f2;
+}
