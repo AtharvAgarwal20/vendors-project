@@ -5,6 +5,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import VendorItem from "./VendorItem";
 
+import styles from "./vendors.module.scss";
+
 const VendorsList = () => {
   const [vendors, setVendors] = useState<VendorFormData[] | null>(null);
   const [errors, setErrors] = useState<string | null>(null);
@@ -37,7 +39,7 @@ const VendorsList = () => {
         {vendors.map((vendor) => {
           return <VendorItem key={vendor.id} vendor={vendor} />;
         })}
-        <div>
+        <div className={styles.pagination}>
           <button
             style={page === 1 ? { opacity: 0, pointerEvents: "none" } : {}}
             onClick={handlePrevPage}

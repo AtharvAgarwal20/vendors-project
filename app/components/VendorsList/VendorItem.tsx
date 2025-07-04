@@ -2,6 +2,8 @@ import { VendorFormData } from "@/app/utils/types";
 import axios from "axios";
 import Link from "next/link";
 
+import styles from "./vendors.module.scss";
+
 type VendorItemProps = {
   vendor: VendorFormData;
 };
@@ -35,16 +37,10 @@ const VendorItem = ({ vendor }: VendorItemProps) => {
   };
 
   return (
-    <div>
-      <p>{name}</p>
-      <p>{bankName}</p>
-      <p>{bankAccNo}</p>
-      <p>{addressLine1}</p>
-      <p>{addressLine2}</p>
-      <p>{city}</p>
-      <p>{country}</p>
-      <p>{zipCode}</p>
-      <p>{id}</p>
+    <div className={styles.vendorItem}>
+      <p>Name: {name}</p>
+      <p>Bank Name: {bankName}</p>
+      <p>Bank Account Number: {bankAccNo}</p>
       <button onClick={deleteVendorItem}>Delete</button>
       <Link href={`/vendors/${id}/edit`}>Edit</Link>
     </div>
