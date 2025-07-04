@@ -6,6 +6,45 @@ import { ZodError } from "zod/v4";
 
 const prisma = new PrismaClient();
 
+export async function GET(req: Request) {
+  const session = await auth();
+
+  if (!session || !session.user?.email) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  try {
+    const allVendors = await prisma.vendor.findMany({
+      where: {
+        email: session.user?.email,
+      },
+      select: {
+        id: true,
+        name: true,
+        bankAccNo: true,
+        bankName: true,
+        addressLine1: true,
+        addressLine2: true,
+        city: true,
+        country: true,
+        zipCode: true,
+      },
+    });
+
+    if (allVendors.length > 0) {
+      return NextResponse.json(allVendors, { status: 200 });
+    }
+
+    return NextResponse.json({ error: "No Vendor Found" }, { status: 404 });
+  } catch (err) {
+    console.log(err);
+    return NextResponse.json(
+      { error: "An unexpected error occurred" },
+      { status: 500 }
+    );
+  }
+}
+
 export async function POST(req: Request) {
   const session = await auth();
 

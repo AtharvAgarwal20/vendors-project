@@ -24,7 +24,7 @@ const Navbar = async () => {
           {session && session?.user ? (
             <>
               <Link href="/vendors/create">Create Vendor</Link>
-              <Link href={`/user/${session.user?.id}`}>My Vendors</Link>
+              <Link href="/vendors/my-vendors">My Vendors</Link>
               <form action={signOutHandler}>
                 <button type="submit">Logout</button>
               </form>

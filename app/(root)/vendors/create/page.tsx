@@ -1,6 +1,10 @@
 import VendorForm from "@/app/components/VendorForm/VendorForm";
+import { auth } from "@/auth";
 
-const page = () => {
+const page = async () => {
+  const session = await auth();
+  if (!session) return <div>Not authenticated</div>;
+
   return <VendorForm url="/api/vendors" method="post" />;
 };
 
