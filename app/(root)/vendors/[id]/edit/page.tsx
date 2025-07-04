@@ -3,14 +3,17 @@
 import VendorForm from "@/app/components/VendorForm/VendorForm";
 import { VendorFormData } from "@/app/utils/types";
 import axios from "axios";
+import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-type EditVendorPageProps = {
-  params: { id: string };
-};
+// type EditVendorPageProps = {
+//   params: { id: string };
+// };
 
-const EditVendorPage = ({ params }: EditVendorPageProps) => {
-  const { id } = params;
+const EditVendorPage = () => {
+  // const { id } = params;
+  const params = useParams();
+  const id = params.id as string;
   const [vendorData, setVendorData] = useState<VendorFormData | null>(null);
   const [errors, setErrors] = useState<string | null>(null);
 
