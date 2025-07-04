@@ -13,12 +13,12 @@ const VendorItem = ({ vendor }: VendorItemProps) => {
     name,
     bankAccNo,
     bankName,
-    addressLine1,
-    addressLine2,
-    city,
-    country,
     id,
-    zipCode,
+    // addressLine1,
+    // addressLine2,
+    // city,
+    // country,
+    // zipCode,
   } = vendor;
 
   const deleteVendorItem = () => {

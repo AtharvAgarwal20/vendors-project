@@ -2,11 +2,18 @@ import { prisma } from "@/app/utils/prisma";
 import { vendorSchema } from "@/app/utils/schemas";
 import { auth } from "@/auth";
 import { Prisma } from "@prisma/client";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+
+type RouteContext = {
+  params: {
+    id: string;
+  };
+};
 
 export async function GET(
-  req: Request,
-  { params }: { params: { id: string } }
+  req: NextRequest,
+  res: NextResponse,
+  { params }: RouteContext
 ) {
   const { id } = params;
   try {
@@ -34,8 +41,9 @@ export async function GET(
 }
 
 export async function PUT(
-  req: Request,
-  { params }: { params: { id: string } }
+  req: NextRequest,
+  res: NextResponse,
+  { params }: RouteContext
 ) {
   const { id } = params;
   const session = await auth();

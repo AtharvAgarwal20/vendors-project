@@ -27,7 +27,7 @@ const EditVendorPage = ({ params }: EditVendorPageProps) => {
           setErrors("Vendor not found");
         });
     }
-  }, []);
+  }, [id]);
 
   if (errors) {
     return <div>{errors}</div>;

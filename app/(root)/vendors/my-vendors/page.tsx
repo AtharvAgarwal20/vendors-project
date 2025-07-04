@@ -6,7 +6,7 @@ const page = async () => {
   if (!session) return <div>Not authenticated</div>;
   return (
     <div>
-      <h1>{session.user?.name}'s Vendors</h1>
+      <h1>{session.user?.name}&apos;s Vendors</h1>
       <VendorsList />
     </div>
   );

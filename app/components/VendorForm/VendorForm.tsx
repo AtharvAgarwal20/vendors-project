@@ -73,7 +73,7 @@ const VendorForm = ({
       if (method === "post") {
         axios
           .post(url, parsedData)
-          .then((res) => {
+          .then(() => {
             alert("Vendor Created");
           })
           .catch((err) => {
@@ -85,7 +85,7 @@ const VendorForm = ({
       } else if (method === "put") {
         axios
           .put(url, parsedData)
-          .then((res) => {
+          .then(() => {
             alert("Vendor Updated");
           })
           .catch((err) => {
