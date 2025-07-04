@@ -107,3 +107,41 @@ export async function POST(req: Request) {
     );
   }
 }
+
+export async function DELETE(req: Request) {
+  const session = await auth();
+
+  if (!session || !session.user?.email) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  try {
+    const body = await req.json();
+    const { id } = body;
+    const deleteResult = await prisma.vendor.delete({
+      where: {
+        id,
+        email: session.user.email,
+      },
+    });
+
+    if (!deleteResult) {
+      return NextResponse.json(
+        { error: "Vendor not found or permission denied" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(
+      { message: "Vendor deleted successfully", data: deleteResult },
+      { status: 200 }
+    );
+  } catch (err) {
+    console.error(err);
+    return NextResponse.json(
+      { error: "An unexpected error occured" },
+      { status: 500 }
+    );
+  }
+}
+export async function PUT(req: Request) {}

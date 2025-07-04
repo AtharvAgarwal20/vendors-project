@@ -30,6 +30,7 @@ const VendorsList = () => {
       </div>
     );
   }
+  return <div>Loading data...</div>;
 };
 
 export default VendorsList;

@@ -1,4 +1,5 @@
 import { VendorFormData } from "@/app/utils/types";
+import axios from "axios";
 
 type VendorItemProps = {
   vendor: VendorFormData;
@@ -17,6 +18,21 @@ const VendorItem = ({ vendor }: VendorItemProps) => {
     zipCode,
   } = vendor;
 
+  const deleteVendorItem = () => {
+    axios
+      .delete("/api/vendors", {
+        data: {
+          id: id,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div>
       <p>{name}</p>
@@ -28,6 +44,7 @@ const VendorItem = ({ vendor }: VendorItemProps) => {
       <p>{country}</p>
       <p>{zipCode}</p>
       <p>{id}</p>
+      <button onClick={deleteVendorItem}>Delete</button>
     </div>
   );
 };
