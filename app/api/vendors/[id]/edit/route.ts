@@ -1,9 +1,8 @@
+import { prisma } from "@/app/utils/prisma";
 import { vendorSchema } from "@/app/utils/schemas";
 import { auth } from "@/auth";
-import { Prisma, PrismaClient } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { NextResponse } from "next/server";
-
-const prisma = new PrismaClient();
 
 export async function GET(
   req: Request,

@@ -1,10 +1,9 @@
+import { prisma } from "@/app/utils/prisma";
 import { vendorSchema } from "@/app/utils/schemas";
 import { auth } from "@/auth";
-import { Prisma, PrismaClient } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { NextResponse } from "next/server";
 import { ZodError } from "zod/v4";
-
-const prisma = new PrismaClient();
 
 export async function GET(req: Request) {
   const session = await auth();
@@ -14,25 +13,47 @@ export async function GET(req: Request) {
   }
 
   try {
-    const allVendors = await prisma.vendor.findMany({
-      where: {
-        email: session.user?.email,
-      },
-      select: {
-        id: true,
-        name: true,
-        bankAccNo: true,
-        bankName: true,
-        addressLine1: true,
-        addressLine2: true,
-        city: true,
-        country: true,
-        zipCode: true,
-      },
-    });
+    const { searchParams } = new URL(req.url);
+
+    const page = parseInt(searchParams.get("page") || "1");
+    const limit = parseInt(searchParams.get("limit") || "2");
+    const skip = (page - 1) * limit;
+
+    const [allVendors, totalVendors] = await prisma.$transaction([
+      prisma.vendor.findMany({
+        skip: skip,
+        take: limit,
+        orderBy: {
+          createdAt: "desc",
+        },
+        where: {
+          email: session.user?.email,
+        },
+        select: {
+          id: true,
+          name: true,
+          bankAccNo: true,
+          bankName: true,
+          addressLine1: true,
+          addressLine2: true,
+          city: true,
+          country: true,
+          zipCode: true,
+        },
+      }),
+      prisma.vendor.count(),
+    ]);
 
     if (allVendors.length > 0) {
-      return NextResponse.json(allVendors, { status: 200 });
+      return NextResponse.json(
+        {
+          vendors: allVendors,
+          totalVendors,
+          totalPages: Math.ceil(totalVendors / limit),
+          currentPage: page,
+        },
+        { status: 200 }
+      );
     }
 
     return NextResponse.json({ error: "No Vendor Found" }, { status: 404 });

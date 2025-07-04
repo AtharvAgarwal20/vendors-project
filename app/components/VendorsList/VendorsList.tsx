@@ -8,17 +8,27 @@ import VendorItem from "./VendorItem";
 const VendorsList = () => {
   const [vendors, setVendors] = useState<VendorFormData[] | null>(null);
   const [errors, setErrors] = useState<string | null>(null);
+  const [page, setPage] = useState(1);
+  const [maxPages, setMaxPages] = useState(1);
 
   useEffect(() => {
     axios
-      .get("/api/vendors")
+      .get(`/api/vendors?page=${page}`)
       .then((res) => {
-        setVendors(res.data);
+        setVendors(res.data.vendors);
+        setMaxPages(res.data.totalPages);
       })
       .catch((err) => {
         setErrors(err?.response?.data?.error);
       });
-  }, []);
+  }, [page]);
+
+  const handleNextPage = () => {
+    setPage((prev) => prev + 1);
+  };
+  const handlePrevPage = () => {
+    setPage((prev) => prev - 1);
+  };
 
   if (errors) return <div>{errors}</div>;
   if (vendors && vendors?.length > 0) {
@@ -27,6 +37,22 @@ const VendorsList = () => {
         {vendors.map((vendor) => {
           return <VendorItem key={vendor.id} vendor={vendor} />;
         })}
+        <div>
+          <button
+            style={page === 1 ? { opacity: 0, pointerEvents: "none" } : {}}
+            onClick={handlePrevPage}
+          >
+            Prev
+          </button>
+          <button
+            style={
+              page === maxPages - 1 ? { opacity: 0, pointerEvents: "none" } : {}
+            }
+            onClick={handleNextPage}
+          >
+            Next
+          </button>
+        </div>
       </div>
     );
   }
