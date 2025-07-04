@@ -5,9 +5,9 @@ import { Prisma } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
 type RouteContext = {
-  params: Promise<{
+  params: {
     id: string;
-  }>;
+  };
 };
 
 export async function GET(
