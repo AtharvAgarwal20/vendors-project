@@ -7,6 +7,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { ZodError } from "zod/v4";
 import TextBox from "../Inputs/TextBox";
+import styles from "./form.module.scss";
 
 type VendorFormProps = {
   url: string;
@@ -102,23 +103,28 @@ const VendorForm = ({
     }
   };
   return (
-    <form onSubmit={handleSubmit}>
-      {formFields.map(({ name, label }) => (
-        <TextBox
-          key={name}
-          value={formData}
-          onChange={handleChange}
-          name={name as keyof VendorFormData}
-          label={label}
-          error={errors[name]?.[0]}
-        />
-      ))}
-      {isLoading ? (
-        <span>Loading...</span>
-      ) : (
-        <button type="submit">Submit</button>
-      )}
-    </form>
+    <main className={styles.formContainer}>
+      <h1>{method === "put" ? "Edit Vendor" : "Create Vendor"}</h1>
+      <form onSubmit={handleSubmit}>
+        <div className={styles.inputWrapper}>
+          {formFields.map(({ name, label }) => (
+            <TextBox
+              key={name}
+              value={formData}
+              onChange={handleChange}
+              name={name as keyof VendorFormData}
+              label={label}
+              error={errors[name]?.[0]}
+            />
+          ))}
+        </div>
+        {isLoading ? (
+          <span>Loading...</span>
+        ) : (
+          <button type="submit">Submit</button>
+        )}
+      </form>
+    </main>
   );
 };
 
