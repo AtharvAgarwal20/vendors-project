@@ -17,7 +17,7 @@ const EditVendorPage = ({ params }: EditVendorPageProps) => {
   useEffect(() => {
     if (parseInt(id)) {
       axios
-        .get(`/api/vendors/edit/?id=${id}`)
+        .get(`/api/vendors/edit?id=${id}`)
         .then((res) => {
           setVendorData(res.data.data);
           console.log(res.data.data);
