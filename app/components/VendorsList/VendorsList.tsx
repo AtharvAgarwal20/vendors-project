@@ -37,7 +37,7 @@ const VendorsList = () => {
     setPage((prev) => prev - 1);
   };
 
-  if (errors) return <div>{errors}</div>;
+  if (errors) return <div className={styles.loading}>{errors}</div>;
   if (vendors && vendors?.length > 0) {
     return (
       <div>
