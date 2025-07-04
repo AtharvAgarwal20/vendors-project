@@ -12,8 +12,10 @@ const VendorsList = () => {
   const [errors, setErrors] = useState<string | null>(null);
   const [page, setPage] = useState(1);
   const [maxPages, setMaxPages] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true);
     axios
       .get(`/api/vendors?page=${page}&limit=3`)
       .then((res) => {
@@ -22,6 +24,9 @@ const VendorsList = () => {
       })
       .catch((err) => {
         setErrors(err?.response?.data?.error);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }, [page]);
 
@@ -36,40 +41,46 @@ const VendorsList = () => {
   if (vendors && vendors?.length > 0) {
     return (
       <div>
-        <div className={styles.tableWrapper}>
-          <div className={styles.tableRow}>
-            <p>Name</p>
-            <p>Bank Name</p>
-            <p>Bank Acc No.</p>
-            <p>Actions</p>
+        {!isLoading ? (
+          <div className={styles.tableWrapper}>
+            <div className={styles.tableRow}>
+              <p>Name</p>
+              <p>Bank Name</p>
+              <p>Bank Acc No.</p>
+              <p>Actions</p>
+            </div>
+            {vendors.map((vendor) => {
+              return <VendorItem key={vendor.id} vendor={vendor} />;
+            })}
           </div>
-          {vendors.map((vendor) => {
-            return <VendorItem key={vendor.id} vendor={vendor} />;
-          })}
-        </div>
-        <div className={styles.pagination}>
-          <button
-            style={page === 1 ? { opacity: 0, pointerEvents: "none" } : {}}
-            onClick={handlePrevPage}
-          >
-            Prev
-          </button>
-          <span>
-            Page {page} of {maxPages}
-          </span>
-          <button
-            style={
-              page === maxPages ? { opacity: 0, pointerEvents: "none" } : {}
-            }
-            onClick={handleNextPage}
-          >
-            Next
-          </button>
-        </div>
+        ) : (
+          <div className={styles.loading}>Loading...</div>
+        )}
+        {maxPages > 0 && (
+          <div className={styles.pagination}>
+            <button
+              style={page === 1 ? { opacity: 0, pointerEvents: "none" } : {}}
+              onClick={handlePrevPage}
+            >
+              &lt;
+            </button>
+            <span>
+              Page {page} of {maxPages}
+            </span>
+            <button
+              style={
+                page === maxPages ? { opacity: 0, pointerEvents: "none" } : {}
+              }
+              onClick={handleNextPage}
+            >
+              &gt;
+            </button>
+          </div>
+        )}
       </div>
     );
   }
-  return <div>Loading data...</div>;
+  return <div className={styles.loading}>Loading data...</div>;
 };
 
 export default VendorsList;
