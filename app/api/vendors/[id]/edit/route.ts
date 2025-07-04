@@ -5,13 +5,17 @@ import { Prisma } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
 type RouteContext = {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 };
 
-export async function GET(req: NextRequest, context: RouteContext) {
-  const { id } = context.params;
+export async function GET(
+  req: NextRequest,
+  res: NextResponse,
+  context: RouteContext
+) {
+  const { id } = await context.params;
   try {
     const vendor = await prisma.vendor.findUniqueOrThrow({
       where: {
@@ -36,8 +40,12 @@ export async function GET(req: NextRequest, context: RouteContext) {
   }
 }
 
-export async function PUT(req: NextRequest, context: RouteContext) {
-  const { id } = context.params;
+export async function PUT(
+  req: NextRequest,
+  res: NextResponse,
+  context: RouteContext
+) {
+  const { id } = await context.params;
   const session = await auth();
 
   if (!session || !session?.user?.email) {
