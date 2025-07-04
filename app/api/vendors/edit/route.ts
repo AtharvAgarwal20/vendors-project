@@ -8,6 +8,11 @@ export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
     const idParam = searchParams.get("id");
+    const session = await auth();
+
+    if (!session || !session.user?.email) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
 
     if (!idParam) {
       return NextResponse.json(
@@ -28,6 +33,7 @@ export async function GET(req: NextRequest) {
     const vendor = await prisma.vendor.findUniqueOrThrow({
       where: {
         id: id,
+        email: session?.user?.email,
       },
     });
 
@@ -62,6 +68,11 @@ export async function PUT(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
     const idParam = searchParams.get("id");
+    const session = await auth();
+
+    if (!session || !session.user?.email) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
 
     if (!idParam) {
       return NextResponse.json(
@@ -77,12 +88,6 @@ export async function PUT(req: NextRequest) {
         { error: "Invalid ID parameter" },
         { status: 400 }
       );
-    }
-
-    const session = await auth();
-
-    if (!session || !session?.user?.email) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const body = await req.json();
