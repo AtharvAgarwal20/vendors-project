@@ -13,7 +13,7 @@ const VendorsList = () => {
 
   useEffect(() => {
     axios
-      .get(`/api/vendors?page=${page}`)
+      .get(`/api/vendors?page=${page}&limit=3`)
       .then((res) => {
         setVendors(res.data.vendors);
         setMaxPages(res.data.totalPages);
