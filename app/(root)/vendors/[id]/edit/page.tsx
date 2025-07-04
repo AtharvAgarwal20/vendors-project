@@ -3,14 +3,14 @@
 import VendorForm from "@/app/components/VendorForm/VendorForm";
 import { VendorFormData } from "@/app/utils/types";
 import axios from "axios";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 type EditVendorPageProps = {
-  params: any;
+  params: { id: string };
 };
 
 const EditVendorPage = ({ params }: EditVendorPageProps) => {
-  const { id } = use<{ id: string }>(params);
+  const { id } = params;
   const [vendorData, setVendorData] = useState<VendorFormData | null>(null);
   const [errors, setErrors] = useState<string | null>(null);
 
