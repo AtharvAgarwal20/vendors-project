@@ -1,4 +1,5 @@
 export type VendorFormData = {
+  id?: number;
   name: string;
   bankAccNo: string;
   bankName: string;
