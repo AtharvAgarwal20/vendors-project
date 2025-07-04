@@ -17,7 +17,7 @@ const EditVendorPage = ({ params }: EditVendorPageProps) => {
   useEffect(() => {
     if (parseInt(id)) {
       axios
-        .get(`/api/vendors/${id}/edit`)
+        .get(`/api/vendors/edit/?id=${id}`)
         .then((res) => {
           setVendorData(res.data.data);
           console.log(res.data.data);
@@ -37,7 +37,7 @@ const EditVendorPage = ({ params }: EditVendorPageProps) => {
     return (
       <div>
         <VendorForm
-          url={`/api/vendors/${id}/edit`}
+          url={`/api/vendors/edit?id=${id}`}
           method="put"
           name={vendorData?.name}
           bankAccNo={vendorData?.bankAccNo}

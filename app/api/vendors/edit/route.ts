@@ -4,22 +4,14 @@ import { auth } from "@/auth";
 import { Prisma } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
-type RouteContext = {
-  params: {
-    id: string;
-  };
-};
+export async function GET(req: NextRequest) {
+  const { searchParams } = new URL(req.url);
+  const id = parseInt(searchParams.get("id") || "0");
 
-export async function GET(
-  req: NextRequest,
-  res: NextResponse,
-  { params }: RouteContext
-) {
-  const { id } = params;
   try {
     const vendor = await prisma.vendor.findUniqueOrThrow({
       where: {
-        id: Number(id),
+        id: id,
       },
     });
 
@@ -40,12 +32,9 @@ export async function GET(
   }
 }
 
-export async function PUT(
-  req: NextRequest,
-  res: NextResponse,
-  { params }: RouteContext
-) {
-  const { id } = params;
+export async function PUT(req: NextRequest) {
+  const { searchParams } = new URL(req.url);
+  const id = parseInt(searchParams.get("id") || "0");
   const session = await auth();
 
   if (!session || !session?.user?.email) {
@@ -80,7 +69,7 @@ export async function PUT(
 
     const updatedVendor = await prisma.vendor.update({
       where: {
-        id: Number(id),
+        id: id,
         email: session.user?.email,
       },
       data: parsedBody,
