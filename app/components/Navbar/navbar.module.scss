@@ -24,7 +24,7 @@
       position: relative;
       color: #fff;
       font-feature-settings: "dlig" on;
-      font-size: 1.25rem;
+      font-size: 1.15rem;
       font-style: normal;
       font-weight: 500;
       line-height: 21px;
@@ -65,16 +65,15 @@
       border-radius: 12px;
       background-color: #2b3036;
       color: white;
-      font-size: 1.15rem;
+      font-size: 1rem;
       transition: background-color 300ms linear;
 
       @media (width < 685px) {
-        font-size: 1rem;
+        font-size: 0.8rem;
       }
 
       @media (width < 496px) {
         padding: 10px 16px;
-        font-size: 0.8rem;
         border-radius: 6px;
       }
 

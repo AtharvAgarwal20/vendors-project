@@ -15,7 +15,7 @@ const EditVendorPage = ({ params }: EditVendorPageProps) => {
   const [errors, setErrors] = useState<string | null>(null);
 
   useEffect(() => {
-    if (id) {
+    if (parseInt(id)) {
       axios
         .get(`/api/vendors/${id}/edit`)
         .then((res) => {
@@ -36,7 +36,6 @@ const EditVendorPage = ({ params }: EditVendorPageProps) => {
   if (vendorData) {
     return (
       <div>
-        <h1>Edit Vendor (ID: {id})</h1>
         <VendorForm
           url={`/api/vendors/${id}/edit`}
           method="put"
@@ -48,6 +47,7 @@ const EditVendorPage = ({ params }: EditVendorPageProps) => {
           city={vendorData?.city || ""}
           country={vendorData?.country || ""}
           zipCode={vendorData?.zipCode || ""}
+          id={parseInt(id)}
         />
       </div>
     );

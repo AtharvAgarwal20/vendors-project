@@ -9,6 +9,8 @@
     padding: 12px 16px;
     border-radius: 8px;
     background: #2b3036;
+    color: white;
+    font-size: 14px;
   }
 
   .error {
@@ -28,5 +30,11 @@
   justify-content: center;
   align-items: center;
   border-radius: 12px;
-  background: #dbe8f2;
+  background-color: #dbe8f2;
+  will-change: background-color;
+  transition: background-color 150ms linear;
+
+  &:hover {
+    background-color: #b7c2cb;
+  }
 }

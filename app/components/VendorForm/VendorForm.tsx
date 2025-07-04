@@ -21,6 +21,7 @@ type VendorFormProps = {
   city?: string;
   country?: string;
   zipCode?: string;
+  id?: number;
 };
 
 const VendorForm = ({
@@ -34,6 +35,7 @@ const VendorForm = ({
   city = "",
   country = "",
   zipCode = "",
+  id,
 }: VendorFormProps) => {
   const [formData, setFormData] = useState<VendorFormData>({
     name,
@@ -105,7 +107,7 @@ const VendorForm = ({
   };
   return (
     <main className={styles.formContainer}>
-      <h1>{method === "put" ? "Edit Vendor" : "Create Vendor"}</h1>
+      <h1>{method === "put" ? `Edit Vendor (ID: ${id})` : "Create Vendor"}</h1>
       <form onSubmit={handleSubmit}>
         <div className={styles.inputWrapper}>
           {formFields.map(({ name, label }) => (

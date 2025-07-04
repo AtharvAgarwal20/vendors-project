@@ -3,13 +3,14 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 2.5rem;
 
   form {
     width: 60%;
-    margin-top: 2.5rem;
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 20px;
 
     @media (width < 1053px) {
       width: 80%;
