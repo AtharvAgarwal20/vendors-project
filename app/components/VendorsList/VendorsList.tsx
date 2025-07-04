@@ -36,9 +36,17 @@ const VendorsList = () => {
   if (vendors && vendors?.length > 0) {
     return (
       <div>
-        {vendors.map((vendor) => {
-          return <VendorItem key={vendor.id} vendor={vendor} />;
-        })}
+        <div className={styles.tableWrapper}>
+          <div className={styles.tableRow}>
+            <p>Name</p>
+            <p>Bank Name</p>
+            <p>Bank Acc No.</p>
+            <p>Actions</p>
+          </div>
+          {vendors.map((vendor) => {
+            return <VendorItem key={vendor.id} vendor={vendor} />;
+          })}
+        </div>
         <div className={styles.pagination}>
           <button
             style={page === 1 ? { opacity: 0, pointerEvents: "none" } : {}}

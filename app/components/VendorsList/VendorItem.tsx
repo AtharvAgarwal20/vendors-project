@@ -37,12 +37,15 @@ const VendorItem = ({ vendor }: VendorItemProps) => {
   };
 
   return (
-    <div className={styles.vendorItem}>
-      <p>Name: {name}</p>
-      <p>Bank Name: {bankName}</p>
-      <p>Bank Account Number: {bankAccNo}</p>
-      <button onClick={deleteVendorItem}>Delete</button>
-      <Link href={`/vendors/${id}/edit`}>Edit</Link>
+    <div className={`${styles.tableRow} ${styles.vendorItem}`}>
+      <p>{name}</p>
+      <p>{bankName}</p>
+      <p>{bankAccNo}</p>
+      <div className={styles.actions}>
+        <button onClick={deleteVendorItem}>Delete</button>
+        <p>|</p>
+        <Link href={`/vendors/${id}/edit`}>Edit</Link>
+      </div>
     </div>
   );
 };
