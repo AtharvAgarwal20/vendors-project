@@ -3,12 +3,65 @@
 
   .navbar {
     display: flex;
-    justify-content: center;
+    padding: 12px 40px;
+    justify-content: space-between;
+    align-items: center;
+    align-self: stretch;
     gap: clamp(20px, 30%, 80px);
+
+    a {
+      position: relative;
+      color: #fff;
+      font-feature-settings: "dlig" on;
+      font-size: 1.25rem;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 21px;
+      text-decoration: none;
+
+      &::after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 2px;
+        background-color: white;
+        left: 0;
+        bottom: -4px;
+        will-change: transform;
+        transform: scaleX(0%);
+        transition: transform 300ms ease-in-out;
+      }
+
+      &:hover::after {
+        transform: scaleX(100%);
+      }
+    }
+
+    button {
+      cursor: pointer;
+      display: flex;
+      // width: 84px;
+      // height: 40px;
+      // min-width: 84px;
+      // max-width: 480px;
+      padding: 14px 20px;
+      justify-content: center;
+      align-items: center;
+      border-radius: 12px;
+      background-color: #2b3036;
+      color: white;
+      font-size: 1.2rem;
+      transition: background-color 300ms linear;
+
+      &:hover {
+        background-color: #474a4e;
+      }
+    }
 
     div {
       display: flex;
-      gap: 10px;
+      align-items: center;
+      gap: 50px;
     }
   }
 }
