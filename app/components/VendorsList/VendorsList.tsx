@@ -44,9 +44,12 @@ const VendorsList = () => {
           >
             Prev
           </button>
+          <span>
+            Page {page} of {maxPages}
+          </span>
           <button
             style={
-              page === maxPages - 1 ? { opacity: 0, pointerEvents: "none" } : {}
+              page === maxPages ? { opacity: 0, pointerEvents: "none" } : {}
             }
             onClick={handleNextPage}
           >

@@ -41,7 +41,11 @@ export async function GET(req: Request) {
           zipCode: true,
         },
       }),
-      prisma.vendor.count(),
+      prisma.vendor.count({
+        where: {
+          email: session.user.email,
+        },
+      }),
     ]);
 
     if (allVendors.length > 0) {
