@@ -1,5 +1,6 @@
 import { VendorFormData } from "@/app/utils/types";
 import axios from "axios";
+import Link from "next/link";
 
 type VendorItemProps = {
   vendor: VendorFormData;
@@ -45,6 +46,7 @@ const VendorItem = ({ vendor }: VendorItemProps) => {
       <p>{zipCode}</p>
       <p>{id}</p>
       <button onClick={deleteVendorItem}>Delete</button>
+      <Link href={`/vendors/${id}/edit`}>Edit</Link>
     </div>
   );
 };

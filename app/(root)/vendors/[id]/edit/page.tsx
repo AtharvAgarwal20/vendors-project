@@ -1,0 +1,59 @@
+"use client";
+
+import VendorForm from "@/app/components/VendorForm/VendorForm";
+import { VendorFormData } from "@/app/utils/types";
+import axios from "axios";
+import { use, useEffect, useState } from "react";
+
+type EditVendorPageProps = {
+  params: any;
+};
+
+const EditVendorPage = ({ params }: EditVendorPageProps) => {
+  const { id } = use<{ id: string }>(params);
+  const [vendorData, setVendorData] = useState<VendorFormData | null>(null);
+  const [errors, setErrors] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (id) {
+      axios
+        .get(`/api/vendors/${id}/edit`)
+        .then((res) => {
+          setVendorData(res.data.data);
+          console.log(res.data.data);
+        })
+        .catch((err) => {
+          console.log(err);
+          setErrors("Vendor not found");
+        });
+    }
+  }, []);
+
+  if (errors) {
+    return <div>{errors}</div>;
+  }
+
+  if (vendorData) {
+    return (
+      <div>
+        <h1>Edit Vendor (ID: {id})</h1>
+        <VendorForm
+          url={`/api/vendors/${id}/edit`}
+          method="put"
+          name={vendorData?.name}
+          bankAccNo={vendorData?.bankAccNo}
+          bankName={vendorData?.bankName}
+          addressLine1={vendorData?.addressLine1}
+          addressLine2={vendorData?.addressLine2 || ""}
+          city={vendorData?.city || ""}
+          country={vendorData?.country || ""}
+          zipCode={vendorData?.zipCode || ""}
+        />
+      </div>
+    );
+  }
+
+  return <div>Loading...</div>;
+};
+
+export default EditVendorPage;

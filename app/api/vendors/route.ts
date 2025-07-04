@@ -144,4 +144,3 @@ export async function DELETE(req: Request) {
     );
   }
 }
-export async function PUT(req: Request) {}

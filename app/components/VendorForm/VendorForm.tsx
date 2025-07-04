@@ -11,18 +11,37 @@ import TextBox from "../Inputs/TextBox";
 type VendorFormProps = {
   url: string;
   method: "post" | "put" | "get";
+  name?: string;
+  bankAccNo?: string;
+  bankName?: string;
+  addressLine1?: string;
+  addressLine2?: string;
+  city?: string;
+  country?: string;
+  zipCode?: string;
 };
 
-const VendorForm = ({ url, method }: VendorFormProps) => {
+const VendorForm = ({
+  url,
+  method,
+  name = "",
+  bankAccNo = "",
+  bankName = "",
+  addressLine1 = "",
+  addressLine2 = "",
+  city = "",
+  country = "",
+  zipCode = "",
+}: VendorFormProps) => {
   const [formData, setFormData] = useState<VendorFormData>({
-    name: "",
-    bankAccNo: "",
-    bankName: "",
-    addressLine1: "",
-    addressLine2: "",
-    city: "",
-    country: "",
-    zipCode: "",
+    name,
+    bankAccNo,
+    bankName,
+    addressLine1,
+    addressLine2,
+    city,
+    country,
+    zipCode,
   });
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string[] | undefined>>(
@@ -52,6 +71,18 @@ const VendorForm = ({ url, method }: VendorFormProps) => {
           .post(url, parsedData)
           .then((res) => {
             alert("Vendor Created");
+          })
+          .catch((err) => {
+            alert(err?.response?.data?.error || "Something went wrong");
+          })
+          .finally(() => {
+            setIsLoading(false);
+          });
+      } else if (method === "put") {
+        axios
+          .put(url, parsedData)
+          .then((res) => {
+            alert("Vendor Updated");
           })
           .catch((err) => {
             alert(err?.response?.data?.error || "Something went wrong");
