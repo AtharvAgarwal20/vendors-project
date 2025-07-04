@@ -10,11 +10,7 @@ type RouteContext = {
   }>;
 };
 
-export async function GET(
-  req: NextRequest,
-  res: NextResponse,
-  context: RouteContext
-) {
+export async function GET(req: NextRequest, context: RouteContext) {
   const { id } = await context.params;
   try {
     const vendor = await prisma.vendor.findUniqueOrThrow({
@@ -40,11 +36,7 @@ export async function GET(
   }
 }
 
-export async function PUT(
-  req: NextRequest,
-  res: NextResponse,
-  context: RouteContext
-) {
+export async function PUT(req: NextRequest, context: RouteContext) {
   const { id } = await context.params;
   const session = await auth();
 
